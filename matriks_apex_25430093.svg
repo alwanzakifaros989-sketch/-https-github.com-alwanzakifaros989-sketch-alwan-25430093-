@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1360 600" role="img" aria-labelledby="title desc">
+  <title id="title">Rancangan Matriks CRUD Apex Tech</title>
+  <desc id="desc">Rancangan operasi CRUD untuk entitas Apex Tech berdasarkan proses bisnis yang dijelaskan dalam laporan.</desc>
+  <style>
+    .bg{fill:#0d1117}.title{fill:#e6edf3;font:700 26px Arial,sans-serif}.note{fill:#9fb0c1;font:13px Arial,sans-serif}.head{fill:#14263a}.a{fill:#111923}.b{fill:#17212c}.line{stroke:#435264;stroke-width:1}.h{fill:#dce7f2;font:700 13px Arial,sans-serif}.t{fill:#dce7f2;font:13px Arial,sans-serif}
+  </style>
+  <rect class="bg" width="1360" height="600" rx="12"/>
+  <text class="title" x="24" y="42">Rancangan Matriks CRUD Apex Tech</text>
+  <text class="note" x="24" y="64">Disusun dari proses dan entitas yang dijelaskan pada laporan; C = Create, R = Read, U = Update.</text>
+  <rect class="head" x="20" y="82" width="1320" height="54"/>
+  <g class="a">
+    <rect x="20" y="136" width="1320" height="52"/><rect class="b" x="20" y="188" width="1320" height="52"/>
+    <rect x="20" y="240" width="1320" height="52"/><rect class="b" x="20" y="292" width="1320" height="52"/>
+    <rect x="20" y="344" width="1320" height="52"/><rect class="b" x="20" y="396" width="1320" height="52"/>
+    <rect x="20" y="448" width="1320" height="52"/><rect class="b" x="20" y="500" width="1320" height="52"/>
+  </g>
+  <g class="line">
+    <path d="M20 82H1340M20 136H1340M20 188H1340M20 240H1340M20 292H1340M20 344H1340M20 396H1340M20 448H1340M20 500H1340M20 552H1340"/>
+    <path d="M280 82V552M492 82V552M704 82V552M916 82V552M1128 82V552M1340 82V552"/>
+  </g>
+  <g class="h" text-anchor="middle">
+    <text x="150" y="105">Entitas</text><text x="150" y="123">Data</text>
+    <text x="386" y="105">PB-01</text><text x="386" y="123">Anggota</text>
+    <text x="598" y="105">PB-02</text><text x="598" y="123">Master / Stok</text>
+    <text x="810" y="105">PB-03</text><text x="810" y="123">Penjualan</text>
+    <text x="1022" y="105">PB-04</text><text x="1022" y="123">Rakit PC</text>
+    <text x="1234" y="105">PB-05</text><text x="1234" y="123">Garansi</text>
+  </g>
+  <g class="t">
+    <text x="36" y="168">Anggota</text><text x="36" y="220">Kategori_Barang</text><text x="36" y="272">Barang</text><text x="36" y="324">Supplier</text>
+    <text x="36" y="376">Transaksi_Penjualan</text><text x="36" y="428">Detail_Penjualan</text><text x="36" y="480">Layanan_Rakit_PC</text><text x="36" y="532">Klaim_Garansi</text>
+  </g>
+  <g class="t" text-anchor="middle">
+    <text x="386" y="168">C, R, U</text><text x="598" y="168">R</text><text x="810" y="168">R</text><text x="1022" y="168">R</text><text x="1234" y="168">R</text>
+    <text x="386" y="220">—</text><text x="598" y="220">C, R, U</text><text x="810" y="220">R</text><text x="1022" y="220">R</text><text x="1234" y="220">—</text>
+    <text x="386" y="272">—</text><text x="598" y="272">C, R, U</text><text x="810" y="272">R, U</text><text x="1022" y="272">R</text><text x="1234" y="272">R</text>
+    <text x="386" y="324">—</text><text x="598" y="324">C, R, U</text><text x="810" y="324">R</text><text x="1022" y="324">—</text><text x="1234" y="324">—</text>
+    <text x="386" y="376">—</text><text x="598" y="376">—</text><text x="810" y="376">C, R</text><text x="1022" y="376">R</text><text x="1234" y="376">R</text>
+    <text x="386" y="428">—</text><text x="598" y="428">—</text><text x="810" y="428">C, R</text><text x="1022" y="428">C, R</text><text x="1234" y="428">R</text>
+    <text x="386" y="480">—</text><text x="598" y="480">—</text><text x="810" y="480">—</text><text x="1022" y="480">C, R, U</text><text x="1234" y="480">—</text>
+    <text x="386" y="532">—</text><text x="598" y="532">—</text><text x="810" y="532">—</text><text x="1022" y="532">—</text><text x="1234" y="532">C, R, U</text>
+  </g>
+</svg>
