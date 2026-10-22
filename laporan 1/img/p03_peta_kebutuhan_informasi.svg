@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="430" viewBox="0 0 1200 430" role="img" aria-labelledby="title desc">
+  <title id="title">Peta kebutuhan informasi ke entitas ERD</title>
+  <desc id="desc">Empat kebutuhan laporan dan jalur entitas yang digunakan untuk menelusurinya.</desc>
+  <rect width="1200" height="430" rx="24" fill="#f4f7fb"/>
+  <text x="600" y="48" text-anchor="middle" font-family="Arial,sans-serif" font-size="27" font-weight="700" fill="#183153">KETERLACAKAN KEBUTUHAN INFORMASI</text>
+  <g font-family="Arial,sans-serif">
+    <rect x="45" y="82" width="350" height="65" rx="13" fill="#e7f1ff" stroke="#3273c5" stroke-width="2"/>
+    <text x="70" y="109" font-size="16" font-weight="700" fill="#17365d">KI-01  Anggota aktif</text><text x="70" y="132" font-size="15" fill="#30445d">Daftar anggota berdasarkan status</text>
+    <path d="M408 114h62" stroke="#71849b" stroke-width="3"/><path d="M461 106l12 8-12 8" fill="none" stroke="#71849b" stroke-width="3"/>
+    <rect x="485" y="82" width="660" height="65" rx="13" fill="#fff" stroke="#8aa0b8" stroke-width="2"/>
+    <text x="520" y="121" font-size="18" font-weight="700" fill="#183153">anggota</text>
+
+    <rect x="45" y="165" width="350" height="65" rx="13" fill="#e8f7f1" stroke="#22936b" stroke-width="2"/>
+    <text x="70" y="192" font-size="16" font-weight="700" fill="#15583f">KI-02  Katalog dan ketersediaan</text><text x="70" y="215" font-size="15" fill="#30445d">Judul beserta jumlah salinan tersedia</text>
+    <path d="M408 197h62" stroke="#71849b" stroke-width="3"/><path d="M461 189l12 8-12 8" fill="none" stroke="#71849b" stroke-width="3"/>
+    <rect x="485" y="165" width="660" height="65" rx="13" fill="#fff" stroke="#8aa0b8" stroke-width="2"/>
+    <text x="520" y="204" font-size="17" font-weight="700" fill="#183153">buku</text><text x="590" y="204" font-size="20" fill="#71849b">→</text><text x="628" y="204" font-size="17" font-weight="700" fill="#183153">eksemplar</text>
+
+    <rect x="45" y="248" width="350" height="65" rx="13" fill="#fff3df" stroke="#df9221" stroke-width="2"/>
+    <text x="70" y="275" font-size="16" font-weight="700" fill="#7a4e0b">KI-03  Riwayat pinjam anggota</text><text x="70" y="298" font-size="15" fill="#30445d">Judul yang pernah dipinjam per anggota</text>
+    <path d="M408 280h62" stroke="#71849b" stroke-width="3"/><path d="M461 272l12 8-12 8" fill="none" stroke="#71849b" stroke-width="3"/>
+    <rect x="485" y="248" width="660" height="65" rx="13" fill="#fff" stroke="#8aa0b8" stroke-width="2"/>
+    <text x="510" y="287" font-size="15" font-weight="700" fill="#183153">anggota</text><text x="575" y="287" font-size="18" fill="#71849b">→</text><text x="600" y="287" font-size="15" font-weight="700" fill="#183153">peminjaman</text><text x="705" y="287" font-size="18" fill="#71849b">→</text><text x="730" y="287" font-size="15" font-weight="700" fill="#183153">detail</text><text x="790" y="287" font-size="18" fill="#71849b">→</text><text x="815" y="287" font-size="15" font-weight="700" fill="#183153">eksemplar</text><text x="920" y="287" font-size="18" fill="#71849b">→</text><text x="945" y="287" font-size="15" font-weight="700" fill="#183153">buku</text>
+
+    <rect x="45" y="331" width="350" height="65" rx="13" fill="#f5edff" stroke="#8854b8" stroke-width="2"/>
+    <text x="70" y="358" font-size="16" font-weight="700" fill="#57327a">KI-04  Rekapitulasi denda</text><text x="70" y="381" font-size="15" fill="#30445d">Akumulasi denda sesuai periode</text>
+    <path d="M408 363h62" stroke="#71849b" stroke-width="3"/><path d="M461 355l12 8-12 8" fill="none" stroke="#71849b" stroke-width="3"/>
+    <rect x="485" y="331" width="660" height="65" rx="13" fill="#fff" stroke="#8aa0b8" stroke-width="2"/>
+    <text x="520" y="370" font-size="17" font-weight="700" fill="#183153">peminjaman</text><text x="630" y="370" font-size="20" fill="#71849b">→</text><text x="670" y="370" font-size="17" font-weight="700" fill="#183153">denda</text>
+  </g>
+</svg>

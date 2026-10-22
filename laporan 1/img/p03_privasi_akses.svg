@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320" role="img" aria-labelledby="title desc">
+  <title id="title">Alur perlindungan data anggota</title>
+  <desc id="desc">Data anggota diproses melalui pembatasan akses, pencatatan tindakan, dan kebijakan retensi.</desc>
+  <rect width="1200" height="320" rx="24" fill="#f4f7fb"/>
+  <text x="600" y="50" text-anchor="middle" font-family="Arial,sans-serif" font-size="27" font-weight="700" fill="#183153">PERLINDUNGAN DATA ANGGOTA</text>
+  <g font-family="Arial,sans-serif" text-anchor="middle">
+    <rect x="60" y="100" width="235" height="150" rx="18" fill="#e7f1ff" stroke="#3273c5" stroke-width="3"/>
+    <text x="177" y="145" font-size="20" font-weight="700" fill="#17365d">DATA PRIBADI</text>
+    <text x="177" y="180" font-size="16" fill="#30445d">Nama, alamat, kontak,</text><text x="177" y="205" font-size="16" fill="#30445d">riwayat pinjam</text>
+    <path d="M307 175h55l-13-10m13 10-13 10" fill="none" stroke="#71849b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="372" y="100" width="235" height="150" rx="18" fill="#e8f7f1" stroke="#22936b" stroke-width="3"/>
+    <text x="489" y="145" font-size="20" font-weight="700" fill="#15583f">HAK MINIMUM</text>
+    <text x="489" y="180" font-size="16" fill="#30445d">Petugas hanya melihat</text><text x="489" y="205" font-size="16" fill="#30445d">data sesuai tugas</text>
+    <path d="M619 175h55l-13-10m13 10-13 10" fill="none" stroke="#71849b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="684" y="100" width="235" height="150" rx="18" fill="#fff3df" stroke="#df9221" stroke-width="3"/>
+    <text x="801" y="145" font-size="20" font-weight="700" fill="#7a4e0b">AUDIT AKSI</text>
+    <text x="801" y="180" font-size="16" fill="#30445d">Pelaku, waktu, dan</text><text x="801" y="205" font-size="16" fill="#30445d">jenis perubahan</text>
+    <path d="M931 175h55l-13-10m13 10-13 10" fill="none" stroke="#71849b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="996" y="100" width="150" height="150" rx="18" fill="#f5edff" stroke="#8854b8" stroke-width="3"/>
+    <text x="1071" y="145" font-size="20" font-weight="700" fill="#57327a">RETENSI</text>
+    <text x="1071" y="180" font-size="15" fill="#30445d">Tujuan dan</text><text x="1071" y="205" font-size="15" fill="#30445d">masa simpan</text>
+  </g>
+  <text x="600" y="287" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" fill="#52657c">Rancangan kontrol harus diterapkan di aplikasi dan basis data, lalu dikaji sesuai kebijakan organisasi.</text>
+</svg>

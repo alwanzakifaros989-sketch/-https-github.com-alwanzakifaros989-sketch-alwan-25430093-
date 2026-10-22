@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="370" viewBox="0 0 1200 370" role="img" aria-labelledby="title desc">
+  <title id="title">Alur peminjaman dan pengembalian perpustakaan</title>
+  <desc id="desc">Lima tahap dari validasi anggota sampai penutupan transaksi dan pembaruan status eksemplar.</desc>
+  <rect width="1200" height="370" rx="24" fill="#f4f7fb"/>
+  <text x="600" y="50" text-anchor="middle" font-family="Arial,sans-serif" font-size="27" font-weight="700" fill="#183153">SIKLUS SIRKULASI EKSEMPLAR</text>
+  <g font-family="Arial,sans-serif" text-anchor="middle">
+    <rect x="28" y="105" width="205" height="168" rx="17" fill="#e7f1ff" stroke="#3273c5" stroke-width="3"/>
+    <circle cx="130" cy="137" r="20" fill="#3273c5"/><text x="130" y="145" font-size="21" font-weight="700" fill="#fff">1</text>
+    <text x="130" y="183" font-size="19" font-weight="700" fill="#17365d">VALIDASI</text>
+    <text x="130" y="215" font-size="15" fill="#30445d">Anggota aktif</text><text x="130" y="239" font-size="15" fill="#30445d">Eksemplar tersedia</text>
+    <path d="M241 188h27l-11-10m11 10-11 10" fill="none" stroke="#70839a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="275" y="105" width="205" height="168" rx="17" fill="#e8f7f1" stroke="#22936b" stroke-width="3"/>
+    <circle cx="377" cy="137" r="20" fill="#22936b"/><text x="377" y="145" font-size="21" font-weight="700" fill="#fff">2</text>
+    <text x="377" y="183" font-size="19" font-weight="700" fill="#15583f">PEMINJAMAN</text>
+    <text x="377" y="215" font-size="15" fill="#30445d">Buat transaksi</text><text x="377" y="239" font-size="15" fill="#30445d">dan detail pinjam</text>
+    <path d="M488 188h27l-11-10m11 10-11 10" fill="none" stroke="#70839a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="522" y="105" width="205" height="168" rx="17" fill="#fff3df" stroke="#df9221" stroke-width="3"/>
+    <circle cx="624" cy="137" r="20" fill="#df9221"/><text x="624" y="145" font-size="21" font-weight="700" fill="#fff">3</text>
+    <text x="624" y="183" font-size="19" font-weight="700" fill="#7a4e0b">MASA PINJAM</text>
+    <text x="624" y="215" font-size="15" fill="#30445d">Status salinan</text><text x="624" y="239" font-size="15" fill="#30445d">tidak tersedia</text>
+    <path d="M735 188h27l-11-10m11 10-11 10" fill="none" stroke="#70839a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="769" y="105" width="180" height="168" rx="17" fill="#f5edff" stroke="#8854b8" stroke-width="3"/>
+    <circle cx="859" cy="137" r="20" fill="#8854b8"/><text x="859" y="145" font-size="21" font-weight="700" fill="#fff">4</text>
+    <text x="859" y="183" font-size="19" font-weight="700" fill="#57327a">KEMBALI</text>
+    <text x="859" y="215" font-size="15" fill="#30445d">Catat tanggal</text><text x="859" y="239" font-size="15" fill="#30445d">pengembalian</text>
+    <path d="M957 188h27l-11-10m11 10-11 10" fill="none" stroke="#70839a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="991" y="105" width="180" height="168" rx="17" fill="#ffecef" stroke="#cb4960" stroke-width="3"/>
+    <circle cx="1081" cy="137" r="20" fill="#cb4960"/><text x="1081" y="145" font-size="21" font-weight="700" fill="#fff">5</text>
+    <text x="1081" y="183" font-size="19" font-weight="700" fill="#8e293b">PENUTUPAN</text>
+    <text x="1081" y="215" font-size="15" fill="#30445d">Hitung denda bila</text><text x="1081" y="239" font-size="15" fill="#30445d">berlaku; update status</text>
+  </g>
+  <text x="600" y="325" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" fill="#52657c">Simpan perubahan transaksi dan status salinan secara konsisten dalam satu proses yang tervalidasi.</text>
+</svg>
