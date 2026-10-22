@@ -35,6 +35,8 @@ Kardinalitas harus dibaca bersama aturan minimum dan maksimum. Hubungan `1 : 0..
 ### 2.2 Tahapan Pemodelan
 Pemodelan dimulai dengan mengidentifikasi objek dan proses bisnis, kemudian merumuskan entitas serta hubungan antardata. Setelah itu, atribut kunci, kardinalitas, dan batasan bisnis ditentukan. Model konseptual menjelaskan kebutuhan tanpa bergantung pada produk basis data; model logis menerjemahkannya menjadi tabel dan kunci; sedangkan model fisik menetapkan tipe data, indeks, dan detail implementasi. Pemisahan tahapan ini mengurangi risiko merancang tabel terlalu dini sebelum kebutuhan sistem dipahami.
 
+![Gambar 2.1: Tahapan pemodelan dari kebutuhan hingga implementasi basis data](img/p03_tahapan_pemodelan.svg)
+
 ### 2.3 Entitas, Atribut, dan Aturan Bisnis
 Entitas mewakili objek yang informasinya perlu disimpan secara berulang dan dikelola sepanjang waktu, bukan sekadar kata benda yang muncul dalam deskripsi sistem. Sebuah objek layak dipertimbangkan sebagai entitas ketika memiliki identitas, atribut yang perlu dipelihara, atau hubungan yang perlu ditelusuri. Atribut menjelaskan karakteristik entitas, sedangkan aturan bisnis menjelaskan batasan tentang nilai atau hubungan yang diperbolehkan.
 
@@ -89,6 +91,8 @@ Kardinalitas ditentukan melalui analisis logika operasional, bukan sekadar estet
 
 ### Titik Analisis 3 — Validasi Jalur Kebutuhan Informasi
 ERD yang baik harus mampu mengakomodasi seluruh daftar Kebutuhan Informasi (KI). Jika suatu informasi gagal ditelusuri melalui jalur relasi yang ada, maka rancangan entitas wajib ditinjau ulang dan diperbaiki.
+
+Pemeriksaan dapat dilakukan dengan memilih satu pertanyaan laporan, mengidentifikasi data yang diperlukan, kemudian menelusuri hubungan antartabel yang menyediakannya. Jika jalur tersebut terputus, kemungkinan ada relasi atau entitas yang belum dimodelkan. Jika satu informasi membutuhkan penggabungan yang tidak sesuai aturan bisnis, definisi kebutuhan dan rancangan perlu diperiksa kembali sebelum implementasi.
 
 ---
 
@@ -239,6 +243,8 @@ Kamus ringkas ini membedakan fakta yang tampak pada diagram dari aturan yang mas
 
 Urutan ini merupakan penjabaran rancangan proses dari relasi pada ERD, bukan klaim bahwa aplikasi atau transaksi basis data telah diimplementasikan dan diuji.
 
+![Gambar 6.2: Alur konseptual peminjaman, masa pinjam, pengembalian, dan denda](img/p03_alur_sirkulasi.svg)
+
 ### 6.5.1 Tahapan dan Hasil Proses Bisnis
 
 | Kode | Proses | Data yang dibaca | Data yang dibuat/diubah | Hasil yang diharapkan |
@@ -260,6 +266,8 @@ Pemetaan ini menguraikan aktor dan data yang terlibat sebagai bahan perancangan 
 | Katalog koleksi buku | `buku` $\rightarrow$ `eksemplar` | Menampilkan judul buku dan ketersediaan fisik eksemplarnya. |
 | Riwayat peminjaman anggota | `anggota` $\rightarrow$ `peminjaman` $\rightarrow$ `detail_peminjaman` $\rightarrow$ `eksemplar` $\rightarrow$ `buku` | Menelusuri buku apa saja yang pernah dipinjam oleh seorang anggota. |
 | Rekapitulasi denda keterlambatan | `peminjaman` $\rightarrow$ `denda` | Menghitung akumulasi denda berdasarkan durasi keterlambatan pengembalian. |
+
+![Gambar 6.3: Jalur entitas untuk menelusuri kebutuhan informasi perpustakaan](img/p03_peta_kebutuhan_informasi.svg)
 
 Kebutuhan informasi di atas tidak langsung menetapkan rancangan tampilan. Sebelum laporan dipakai, pihak perpustakaan perlu menentukan periodenya, urutan penyajian, aturan penyertaan anggota nonaktif, dan apakah data pribadi boleh ditampilkan. Misalnya, laporan aktivitas sirkulasi harian berbeda dari daftar seluruh riwayat yang tidak dibatasi waktu.
 
@@ -303,6 +311,8 @@ Daftar ini adalah pokok kebutuhan untuk dikonfirmasi, bukan pernyataan bahwa tar
 | Pengembalian hanya dibuat sekali per transaksi | Pertahankan keunikan FK `no_peminjaman` di `pengembalian`. | Transaksi yang sama dapat ditutup berkali-kali. |
 
 Aturan yang bergantung pada keadaan beberapa baris, seperti satu eksemplar tidak boleh memiliki dua peminjaman aktif, tidak cukup dijamin oleh pemeriksaan antarmuka saja. Implementasi perlu menggunakan transaksi basis data dan mekanisme penguncian atau validasi setara agar dua permintaan bersamaan tidak sama-sama melihat salinan sebagai tersedia.
+
+![Gambar 6.4: Lapisan validasi mulai dari atribut sampai konsistensi transaksi](img/p03_validasi_integritas.svg)
 
 ### 6.8 Contoh Penelusuran Informasi
 
@@ -369,6 +379,8 @@ Data anggota mencakup nama, alamat, nomor telepon, surel, dan riwayat peminjaman
 Pengamanan tidak cukup dilakukan dengan menyembunyikan kolom di antarmuka. Akses perlu dijaga pada lapisan aplikasi dan basis data, komunikasi menggunakan koneksi terlindungi, serta kredensial dikelola dengan aman. Bila sistem mencatat audit, catatan tersebut dapat berisi identitas pelaku, waktu, jenis tindakan, dan objek terkait tanpa menyalin data pribadi secara berlebihan.
 
 Kebijakan retensi juga perlu ditetapkan. Riwayat pinjam mungkin diperlukan untuk audit atau pelayanan, tetapi menyimpan informasi kontak tanpa batas waktu dapat menambah risiko privasi. Pengelola perlu menentukan tujuan pengumpulan, masa simpan, proses koreksi, dan prosedur untuk permintaan penghapusan sesuai kebijakan organisasi serta ketentuan yang berlaku. Laporan ini mengidentifikasi kebutuhan tersebut, bukan menggantikan kajian kepatuhan formal.
+
+![Gambar 6.5: Prinsip pembatasan akses, audit tindakan, dan retensi data anggota](img/p03_privasi_akses.svg)
 
 ### 6.14 Risiko Desain dan Mitigasi Awal
 
