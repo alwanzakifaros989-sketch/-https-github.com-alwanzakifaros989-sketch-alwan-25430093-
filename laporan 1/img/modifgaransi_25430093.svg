@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 360" role="img" aria-labelledby="title desc">
+  <title id="title">Modifikasi Sistem Garansi Produk</title>
+  <desc id="desc">Aturan dan perubahan data untuk fitur klaim garansi Kopma.</desc>
+  <style>
+    .bg{fill:#0d1117}.title{fill:#e6edf3;font:700 25px Arial,sans-serif}.head{fill:#14263a}.a{fill:#111923}.b{fill:#17212c}.line{stroke:#435264;stroke-width:1}.h{fill:#dce7f2;font:700 15px Arial,sans-serif}.t{fill:#dce7f2;font:14px Arial,sans-serif}
+  </style>
+  <rect class="bg" width="1000" height="360" rx="12"/>
+  <text class="title" x="24" y="42">Modifikasi Sistem Garansi Produk</text>
+  <rect class="head" x="20" y="62" width="960" height="46"/>
+  <rect class="a" x="20" y="108" width="960" height="62"/><rect class="b" x="20" y="170" width="960" height="62"/>
+  <rect class="a" x="20" y="232" width="960" height="62"/>
+  <g class="line"><path d="M20 62H980M20 108H980M20 170H980M20 232H980M20 294H980"/><path d="M200 62V294M980 62V294"/></g>
+  <g class="h"><text x="34" y="91">Bagian</text><text x="214" y="91">Aturan / Implementasi</text></g>
+  <g class="t">
+    <text x="34" y="145">Masa garansi</text><text x="214" y="145">Barang elektronik memiliki masa garansi yang dihitung sejak tanggal nota diterbitkan.</text>
+    <text x="34" y="207">Klaim</text><text x="214" y="207">Klaim garansi dapat diajukan maksimal satu kali selama masa garansi berlaku.</text>
+    <text x="34" y="269">Perubahan data</text><text x="214" y="262">Tambahkan atribut masa_garansi pada Barang dan tabel relasi klaim_garansi;</text>
+    <text x="214" y="281">sesuaikan matriks CRUD untuk operasi klaim.</text>
+  </g>
+</svg>

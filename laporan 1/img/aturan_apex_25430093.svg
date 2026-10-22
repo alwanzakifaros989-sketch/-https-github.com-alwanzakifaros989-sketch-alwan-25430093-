@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300" role="img" aria-labelledby="title desc">
+  <title id="title">Aturan Bisnis Apex Tech</title>
+  <desc id="desc">Tiga aturan bisnis utama pada proyek Apex Tech.</desc>
+  <style>
+    .bg{fill:#0d1117}.title{fill:#e6edf3;font:700 26px Arial,sans-serif}.head{fill:#14263a}.a{fill:#111923}.b{fill:#17212c}.line{stroke:#435264;stroke-width:1}.h{fill:#dce7f2;font:700 15px Arial,sans-serif}.t{fill:#dce7f2;font:14px Arial,sans-serif}
+  </style>
+  <rect class="bg" width="1000" height="300" rx="12"/><text class="title" x="24" y="42">Aturan Bisnis Apex Tech</text>
+  <rect class="head" x="20" y="62" width="960" height="46"/><rect class="a" x="20" y="108" width="960" height="54"/><rect class="b" x="20" y="162" width="960" height="54"/><rect class="a" x="20" y="216" width="960" height="54"/>
+  <g class="line"><path d="M20 62H980M20 108H980M20 162H980M20 216H980M20 270H980"/><path d="M110 62V270M980 62V270"/></g>
+  <g class="h"><text x="36" y="91">Kode</text><text x="126" y="91">Aturan</text></g>
+  <g class="t">
+    <text x="38" y="141">AB-01</text><text x="126" y="141">Setiap komponen barang wajib memiliki kategori dan harga jual lebih dari nol.</text>
+    <text x="38" y="195">AB-02</text><text x="126" y="195">Transaksi penjualan wajib mencatat ID anggota dan ID kasir yang bertugas.</text>
+    <text x="38" y="249">AB-03</text><text x="126" y="249">Stok komponen otomatis berkurang setelah transaksi penjualan berhasil divalidasi.</text>
+  </g>
+</svg>
