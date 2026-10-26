@@ -121,6 +121,9 @@ Keterangan:
 
 Skema kanonik Kopma menggunakan kunci pengganti (*surrogate key*) berupa atribut `id_*` sebagai kunci primer. Nomor atau kode alami tetap dipertahankan sebagai kunci unik apabila ditentukan dalam skema.
 
+![Perbandingan BCNF](img/p04_tabelPerbandingan.png)
+![Pemeriksaan BCNF](img/p04_BNFC.png)
+
 ### Tabel Skema Kanonik Kopma
 
 | Tabel | Kunci primer (PK) | Kunci unik (UQ) | Kunci tamu (FK) |
