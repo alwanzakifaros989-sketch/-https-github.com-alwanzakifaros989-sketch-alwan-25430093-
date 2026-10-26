@@ -24,9 +24,17 @@ Setelah diubah menjadi bentuk normal pertama (1NF), relasinya menjadi:
 
 Setiap atribut menyimpan satu nilai pada setiap baris dan tidak ada lagi kelompok barang berulang. Namun, masih terdapat atribut yang bergantung pada sebagian kunci komposit serta ketergantungan transitif. Oleh karena itu, normalisasi dilanjutkan ke 2NF dan 3NF.
 
-## D.2 Menuliskan Dependensi Fungsional
+## 3.2 Menentukan Dependensi Fungsional
 
-Dependensi fungsional diturunkan dari aturan bisnis Kopma, bukan hanya berdasarkan isi spreadsheet atau contoh data.
+Ketergantungan fungsional ditentukan berdasarkan aturan bisnis, bukan hanya dari kebetulan nilai yang terlihat pada data. Penentuan ini membantu mengetahui atribut yang bergantung pada suatu kunci.
+
+| Contoh penentu | Atribut yang ditentukan | Makna |
+|---|---|---|
+| `kode_barang` | Atribut barang yang ditentukan oleh kode tersebut | Satu kode barang mengidentifikasi data barang yang sesuai. |
+| `kode_petugas` | Atribut petugas yang ditentukan oleh kode tersebut | Data petugas dapat dikelola melalui kode petugas. |
+| `no_nota_penjualan` | Informasi transaksi penjualan | Nomor nota mengidentifikasi transaksi penjualan. |
+
+Contoh tersebut diterapkan secara rinci pada dependensi fungsional berikut:
 
 | Kode | Dependensi fungsional | Keterangan |
 |---|---|---|
@@ -37,9 +45,9 @@ Dependensi fungsional diturunkan dari aturan bisnis Kopma, bukan hanya berdasark
 | FD5 | `(no_nota_penjualan, kode_barang) → qty_detail_penjualan, harga_satuan_detail_penjualan` | Kombinasi nomor nota dan kode barang menentukan kuantitas serta harga satuan pada transaksi. Berdasarkan AB-04. |
 | FD6 | `(qty_detail_penjualan, harga_satuan_detail_penjualan) → subtotal_detail_penjualan` | Subtotal merupakan nilai turunan dari kuantitas dikalikan harga satuan. |
 
-## D.3 Menuju 2NF dan 3NF
+## 3.3 Mengubah 1NF menjadi 2NF
 
-### A. Tahap 2NF
+### Tahap 2NF
 
 Bentuk normal kedua (2NF) mensyaratkan bahwa relasi sudah memenuhi 1NF dan tidak memiliki atribut bukan kunci yang bergantung hanya pada sebagian kunci komposit.
 
@@ -49,27 +57,25 @@ Dengan demikian, informasi penjualan dan informasi barang perlu dipisahkan dari 
 
 Relasi hasil pemisahan menuju 2NF adalah:
 
-**1. PENJUALAN**
+| Relasi | Informasi yang dikelola |
+|---|---|
+| `penjualan` | Informasi utama transaksi penjualan. |
+| `barang` | Informasi barang. |
+| `detail_penjualan` | Detail barang yang terdapat dalam transaksi penjualan. |
 
-`PENJUALAN (no_nota_penjualan, tgl_penjualan, kode_petugas, nama_petugas, no_anggota, nama_anggota, jumlah_penjualan, diskon_penjualan, total_penjualan)`
+Struktur relasi hasil pemisahan:
 
-Kunci primer: `no_nota_penjualan`.
-
-**2. BARANG**
-
-`BARANG (kode_barang, nama_barang)`
-
-Kunci primer: `kode_barang`.
-
-**3. DETAIL_PENJUALAN**
-
-`DETAIL_PENJUALAN (no_nota_penjualan, kode_barang, qty_detail_penjualan, harga_satuan_detail_penjualan, subtotal_detail_penjualan)`
-
-Kunci primer komposit: `(no_nota_penjualan, kode_barang)`.
+| Relasi | Atribut | Kunci primer |
+|---|---|---|
+| `PENJUALAN` | `no_nota_penjualan`, `tgl_penjualan`, `kode_petugas`, `nama_petugas`, `no_anggota`, `nama_anggota`, `jumlah_penjualan`, `diskon_penjualan`, `total_penjualan` | `no_nota_penjualan` |
+| `BARANG` | `kode_barang`, `nama_barang` | `kode_barang` |
+| `DETAIL_PENJUALAN` | `no_nota_penjualan`, `kode_barang`, `qty_detail_penjualan`, `harga_satuan_detail_penjualan`, `subtotal_detail_penjualan` | (`no_nota_penjualan`, `kode_barang`) |
 
 Pada tahap ini, ketergantungan pada sebagian kunci komposit telah dihilangkan. Akan tetapi, tabel `PENJUALAN` masih memiliki ketergantungan transitif karena `nama_petugas` ditentukan oleh `kode_petugas`, sedangkan `nama_anggota` ditentukan oleh `no_anggota`. Nilai turunan juga masih perlu dievaluasi sebelum menetapkan skema operasional akhir.
 
-### B. Tahap 3NF
+## 3.4 Mengubah 2NF menjadi 3NF
+
+### Tahap 3NF
 
 Bentuk normal ketiga (3NF) mensyaratkan bahwa relasi sudah memenuhi 2NF dan tidak memiliki ketergantungan transitif yang tidak diinginkan di antara atribut bukan kunci.
 
@@ -109,28 +115,9 @@ Keterangan:
 
 - Atribut yang ditetapkan sebagai kunci primer mengidentifikasi setiap baris dalam relasinya.
 - Tanda `*` menunjukkan kunci tamu atau referensi ke relasi lain.
-- `no_nota_penjualan` menjadi kunci primer pada bentuk relasi hasil pemisahan awal. Pada skema kanonik D.4, kunci primer penjualan menggunakan `id_penjualan`, sedangkan nomor nota menjadi kunci unik.
+- `no_nota_penjualan` menjadi kunci primer pada bentuk relasi hasil pemisahan awal. Pada skema kanonik bagian 3.5, kunci primer penjualan menggunakan `id_penjualan`, sedangkan nomor nota menjadi kunci unik.
 
-### C. Keputusan Penyimpanan Nilai Turunan
-
-Nilai turunan yang dibahas dalam normalisasi penjualan meliputi:
-
-- `subtotal_detail_penjualan`
-- `jumlah_penjualan`
-- `diskon_penjualan`
-- `total_penjualan`
-
-Subtotal dihitung menggunakan rumus:
-
-`subtotal_detail_penjualan = qty_detail_penjualan × harga_satuan_detail_penjualan`
-
-Jumlah penjualan diperoleh dengan menjumlahkan subtotal seluruh barang dalam satu nota. Diskon ditentukan berdasarkan aturan bisnis yang berlaku, sedangkan total penjualan dihitung berdasarkan jumlah penjualan dan diskon.
-
-Berdasarkan keputusan dalam modul, `subtotal_detail_penjualan`, `jumlah_penjualan`, dan `total_penjualan` tidak disimpan sebagai atribut tersendiri dalam tabel operasional karena nilainya dapat dihitung dari detail transaksi dan aturan yang berlaku. Hal ini mengurangi risiko ketidaksesuaian antara nilai yang disimpan dan hasil perhitungan.
-
-Sementara itu, `bayar_penjualan` tetap dicatat karena merepresentasikan uang yang diterima dari pembeli. Nilai pembayaran aktual berbeda dari total belanja yang dihitung.
-
-## D.4 Mencocokkan dengan Skema Kanonik
+## 3.5 Mencocokkan dengan Skema Kanonik dan Pemeriksaan BCNF
 
 Skema kanonik Kopma menggunakan kunci pengganti (*surrogate key*) berupa atribut `id_*` sebagai kunci primer. Nomor atau kode alami tetap dipertahankan sebagai kunci unik apabila ditentukan dalam skema.
 
@@ -172,6 +159,35 @@ BCNF (*Boyce–Codd Normal Form*) mensyaratkan bahwa setiap penentu pada depende
 | `detail_pembelian` | `(id_pembelian, id_barang)` | Gabungan atribut merupakan kunci primer komposit. BCNF terpenuhi jika tidak terdapat penentu lain yang bukan kunci kandidat. |
 
 Berdasarkan dependensi fungsional yang telah diidentifikasi, penentu yang merupakan kunci kandidat tidak melanggar BCNF. Pemeriksaan tetap harus mempertimbangkan seluruh dependensi yang berlaku pada setiap tabel. Penggunaan kunci pengganti saja tidak otomatis menjamin bahwa suatu relasi memenuhi BCNF.
+
+## 3.6 Menentukan Nilai Turunan
+
+Nilai turunan yang dibahas dalam normalisasi penjualan meliputi:
+
+- `subtotal_detail_penjualan`
+- `jumlah_penjualan`
+- `diskon_penjualan`
+- `total_penjualan`
+
+Subtotal dihitung menggunakan rumus:
+
+`subtotal_detail_penjualan = qty_detail_penjualan × harga_satuan_detail_penjualan`
+
+Jumlah penjualan diperoleh dengan menjumlahkan subtotal seluruh barang dalam satu nota. Diskon ditentukan berdasarkan aturan bisnis yang berlaku, sedangkan total penjualan dihitung berdasarkan jumlah penjualan dan diskon.
+
+Berdasarkan keputusan dalam modul, `subtotal_detail_penjualan`, `jumlah_penjualan`, dan `total_penjualan` tidak disimpan sebagai atribut tersendiri dalam tabel operasional karena nilainya dapat dihitung dari detail transaksi dan aturan yang berlaku. Hal ini mengurangi risiko ketidaksesuaian antara nilai yang disimpan dan hasil perhitungan.
+
+Sementara itu, `bayar_penjualan` tetap dicatat karena merepresentasikan uang yang diterima dari pembeli. Nilai pembayaran aktual berbeda dari total belanja yang dihitung.
+
+## 6.4 Nilai Turunan dan Catatan Normalisasi
+
+| Catatan | Ringkasan |
+|---|---|
+| Nilai turunan | `subtotal_detail_penjualan` dihitung dari kuantitas dikali harga satuan; jumlah dan total penjualan diperoleh dari agregasi serta aturan diskon. |
+| Nilai yang dicatat | `bayar_penjualan` tetap dicatat karena merupakan jumlah pembayaran aktual dari pembeli. |
+| Pemisahan relasi | Data transaksi, barang, dan rincian barang dipisahkan agar kelompok berulang dan ketergantungan parsial tidak tersimpan dalam satu relasi. |
+| Tahap normalisasi | 1NF menguraikan grup berulang, 2NF menghilangkan ketergantungan parsial, dan 3NF memisahkan ketergantungan transitif. |
+| Pemeriksaan BCNF | Setiap penentu perlu diperiksa terhadap kunci kandidat pada relasinya; penggunaan kunci pengganti saja tidak otomatis menjamin BCNF. |
 
 ## Kesimpulan
 
