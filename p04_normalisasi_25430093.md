@@ -121,8 +121,16 @@ Keterangan:
 
 Skema kanonik Kopma menggunakan kunci pengganti (*surrogate key*) berupa atribut `id_*` sebagai kunci primer. Nomor atau kode alami tetap dipertahankan sebagai kunci unik apabila ditentukan dalam skema.
 
-![Perbandingan BCNF](img/p04_tabelPerbandingan.png)
-![Pemeriksaan BCNF](img/p04_BNFC.png)
+### Perbandingan Hasil 3NF dengan Skema Kanonik
+
+| Relasi hasil 3NF | Kunci pada hasil 3NF | Penyesuaian pada skema kanonik |
+|---|---|---|
+| `PENJUALAN` | `no_nota_penjualan` (PK); `kode_petugas` dan `no_anggota` sebagai referensi | Menggunakan `id_penjualan` sebagai PK; `no_nota_penjualan` menjadi UQ; referensi menggunakan `id_petugas` dan `id_anggota`. |
+| `DETAIL_PENJUALAN` | (`no_nota_penjualan`, `kode_barang`) (PK) | PK/FK menggunakan (`id_penjualan`, `id_barang`). |
+| `BARANG` | `kode_barang` (PK) | Menggunakan `id_barang` sebagai PK dan mempertahankan `kode_barang` sebagai UQ. |
+| `PETUGAS` | `kode_petugas` (PK) | Menggunakan `id_petugas` sebagai PK dan mempertahankan `kode_petugas` sebagai UQ. |
+| `ANGGOTA` | `no_anggota` (PK) | Menggunakan `id_anggota` sebagai PK; `no_anggota` dan `nim_anggota` menjadi UQ. |
+| `PEMASOK`, `PEMBELIAN`, `DETAIL_PEMBELIAN` | Tidak dibahas pada relasi hasil 3NF di atas | Merupakan relasi tambahan pada skema kanonik untuk mendukung data pemasok dan transaksi pembelian. |
 
 ### Tabel Skema Kanonik Kopma
 
