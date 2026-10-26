@@ -1,90 +1,228 @@
-# Dokumen Normalisasi dan Skema Relasional Proyek
+# NORMALISASI KOPMA
+
+**Nama:** Alwan Zaki Faros  
+**Kelas:** D  
+**NPM:** 25430093  
 
 ---
 
-## 1. Bentuk Tidak Normal (Unnormalized Form - UNF)
+## D.1 Mengubah UNF menjadi 1NF
 
-Bentuk mentah dokumen rekam medis atau kuitansi kunjungan pasien masih memiliki kelompok atribut berulang untuk resep obat.
+Relasi awal yang belum dinormalisasi adalah:
 
-```text
-DOKUMEN_KLINIK_UNF (
-    no_kunjungan, tgl_kunjungan, no_rekam_medis, nama_pasien, tgl_lahir_pasien,
-    alamat_pasien, no_hp_pasien, kode_dokter, nama_dokter, spesialisasi_dokter,
-    keluhan_utama,
-    { kode_obat, nama_obat, qty_resep, aturan_pakai, harga_satuan_obat },
-    total_biaya_kunjungan
-)
-```
+`NOTA_UNF (no_nota_penjualan, tgl_penjualan, kode_petugas, nama_petugas, no_anggota, nama_anggota, {kode_barang, nama_barang, qty_detail_penjualan, harga_satuan_detail_penjualan, subtotal_detail_penjualan}, jumlah_penjualan, diskon_penjualan, total_penjualan)`
 
----
+Relasi tersebut masih memiliki kelompok barang berulang dalam satu nota. Satu nota dapat berisi beberapa barang sehingga kelompok barang perlu diuraikan menjadi satu baris untuk setiap barang pada setiap nota.
 
-## 2. Aturan Dependensi Fungsional (Functional Dependency - FD)
+Setelah diubah menjadi bentuk normal pertama (1NF), relasinya menjadi:
 
-Dependensi fungsional berikut diturunkan dari aturan bisnis layanan klinik.
+`NOTA_1NF (no_nota_penjualan, kode_barang, tgl_penjualan, kode_petugas, nama_petugas, no_anggota, nama_anggota, nama_barang, qty_detail_penjualan, harga_satuan_detail_penjualan, subtotal_detail_penjualan, jumlah_penjualan, diskon_penjualan, total_penjualan)`
 
-| ID | Penentu (determinant) | Atribut yang ditentukan | Keterangan |
-| --- | --- | --- | --- |
-| FD1 | `no_kunjungan` | `tgl_kunjungan`, `no_rekam_medis`, `kode_dokter`, `keluhan_utama` | Data utama kunjungan |
-| FD2 | `no_rekam_medis` | `nama_pasien`, `tgl_lahir_pasien`, `alamat_pasien`, `no_hp_pasien` | Data pasien |
-| FD3 | `kode_dokter` | `nama_dokter`, `spesialisasi_dokter` | Data dokter |
-| FD4 | `kode_obat` | `nama_obat`, `harga_satuan_obat` | Data master obat |
-| FD5 | (`no_kunjungan`, `kode_obat`) | `qty_resep`, `aturan_pakai`, `harga_satuan_resep` | Data item resep; harga disimpan sebagai harga historis |
-| FD6 | (`qty_resep`, `harga_satuan_resep`) | `subtotal_resep` | Nilai turunan, dihitung dari jumlah dikali harga satuan |
+**Kunci primer komposit:** `(no_nota_penjualan, kode_barang)`.
 
----
+**Hasil normalisasi 1NF:**
 
-## 3. Tahapan Normalisasi (UNF hingga 3NF)
+Setiap atribut menyimpan satu nilai pada setiap baris dan tidak ada lagi kelompok barang berulang. Namun, masih terdapat atribut yang bergantung pada sebagian kunci komposit serta ketergantungan transitif. Oleh karena itu, normalisasi dilanjutkan ke 2NF dan 3NF.
 
-### UNF
+## D.2 Menuliskan Dependensi Fungsional
 
-| Relasi | Struktur dan kondisi |
-| --- | --- |
-| `DOKUMEN_KLINIK_UNF` | Memuat data kunjungan, pasien, dokter, resep, dan total biaya dalam satu dokumen. Atribut resep obat masih berupa grup berulang. |
+Dependensi fungsional diturunkan dari aturan bisnis Kopma, bukan hanya berdasarkan isi spreadsheet atau contoh data.
 
-### 1NF
+| Kode | Dependensi fungsional | Keterangan |
+|---|---|---|
+| FD1 | `no_nota_penjualan → tgl_penjualan, kode_petugas, no_anggota` | Satu nomor nota menentukan tanggal transaksi, petugas, dan anggota. Berdasarkan AB-01. |
+| FD2 | `kode_petugas → nama_petugas` | Kode petugas menentukan nama petugas. |
+| FD3 | `no_anggota → nama_anggota` | Nomor anggota menentukan nama anggota. Berdasarkan AB-05. |
+| FD4 | `kode_barang → nama_barang` | Kode barang menentukan nama barang. |
+| FD5 | `(no_nota_penjualan, kode_barang) → qty_detail_penjualan, harga_satuan_detail_penjualan` | Kombinasi nomor nota dan kode barang menentukan kuantitas serta harga satuan pada transaksi. Berdasarkan AB-04. |
+| FD6 | `(qty_detail_penjualan, harga_satuan_detail_penjualan) → subtotal_detail_penjualan` | Subtotal merupakan nilai turunan dari kuantitas dikalikan harga satuan. |
 
-| Relasi | Kunci utama | Atribut lainnya | Keterangan |
-| --- | --- | --- | --- |
-| `KUNJUNGAN_1NF` | (`no_kunjungan`, `kode_obat`) | `tgl_kunjungan`, `no_rekam_medis`, `nama_pasien`, `tgl_lahir_pasien`, `alamat_pasien`, `no_hp_pasien`, `kode_dokter`, `nama_dokter`, `spesialisasi_dokter`, `keluhan_utama`, `qty_resep`, `aturan_pakai`, `harga_satuan_resep`, `total_biaya_kunjungan` | Grup berulang diuraikan menjadi baris; setiap baris mewakili satu obat pada kunjungan. |
+## D.3 Menuju 2NF dan 3NF
 
-### 2NF
+### A. Tahap 2NF
 
-| Relasi | Kunci utama | Atribut lainnya | Keterangan |
-| --- | --- | --- | --- |
-| `KUNJUNGAN_HEADER` | `no_kunjungan` | `tgl_kunjungan`, `no_rekam_medis`, `nama_pasien`, `tgl_lahir_pasien`, `alamat_pasien`, `no_hp_pasien`, `kode_dokter`, `nama_dokter`, `spesialisasi_dokter`, `keluhan_utama` | Memisahkan atribut yang bergantung hanya pada `no_kunjungan`. |
-| `RESEP_DETAIL` | (`no_kunjungan`, `kode_obat`) | `qty_resep`, `aturan_pakai`, `harga_satuan_resep` | Atribut resep bergantung pada seluruh kunci komposit. |
-| `OBAT_MASTER` | `kode_obat` | `nama_obat`, `harga_satuan_obat` | Memisahkan atribut yang bergantung pada kode obat. |
+Bentuk normal kedua (2NF) mensyaratkan bahwa relasi sudah memenuhi 1NF dan tidak memiliki atribut bukan kunci yang bergantung hanya pada sebagian kunci komposit.
 
-### 3NF
+Pada relasi `NOTA_1NF`, kunci kompositnya adalah `(no_nota_penjualan, kode_barang)`. Namun, tanggal penjualan hanya ditentukan oleh nomor nota, sedangkan nama barang hanya ditentukan oleh kode barang.
 
-| Relasi | Kunci utama | Kunci asing | Atribut lainnya | Keterangan |
-| --- | --- | --- | --- | --- |
-| `pasien` | `id_pasien` | - | `no_rekam_medis` (unik), `nama_pasien`, `tgl_lahir_pasien`, `alamat_pasien`, `no_hp_pasien` | Data pasien dipisahkan dari data kunjungan. |
-| `dokter` | `id_dokter` | - | `kode_dokter` (unik), `nama_dokter`, `spesialisasi_dokter` | Data dokter dipisahkan dari data kunjungan. |
-| `obat` | `id_obat` | - | `kode_obat` (unik), `nama_obat`, `harga_jual_obat`, `stok_obat` | Katalog obat menggunakan surrogate key. |
-| `kunjungan` | `id_kunjungan` | `id_pasien`, `id_dokter` | `no_kunjungan` (unik), `tgl_kunjungan`, `keluhan_utama` | Header transaksi; total biaya tidak disimpan karena merupakan nilai turunan. |
-| `detail_resep` | (`id_kunjungan`, `id_obat`) | `id_kunjungan`, `id_obat` | `qty_resep`, `aturan_pakai`, `harga_satuan_resep` | Tabel asosiatif resep yang menyimpan harga historis. |
+Dengan demikian, informasi penjualan dan informasi barang perlu dipisahkan dari detail transaksi.
 
----
+Relasi hasil pemisahan menuju 2NF adalah:
 
-## 4. Evaluasi BCNF (Boyce-Codd Normal Form)
+**1. PENJUALAN**
 
-Setiap entitas hasil normalisasi 3NF di atas dinyatakan memenuhi BCNF karena setiap penentu pada dependensi fungsional nontrivial di dalam entitas merupakan kunci kandidat.
+`PENJUALAN (no_nota_penjualan, tgl_penjualan, kode_petugas, nama_petugas, no_anggota, nama_anggota, jumlah_penjualan, diskon_penjualan, total_penjualan)`
 
----
+Kunci primer: `no_nota_penjualan`.
 
-## 5. Pengelolaan Nilai Turunan
+**2. BARANG**
 
-| Nilai | Disimpan? | Cara memperoleh |
-| --- | --- | --- |
-| `subtotal_resep` | Tidak | Dihitung dari `qty_resep * harga_satuan_resep`. |
-| `total_biaya_kunjungan` | Tidak | Dihitung dengan agregasi `SUM(qty_resep * harga_satuan_resep)` dari `detail_resep` untuk menghindari anomali pembaruan pada OLTP. |
+`BARANG (kode_barang, nama_barang)`
 
----
+Kunci primer: `kode_barang`.
 
-## 6. Data Historis dan Aturan Parameter P
+**3. DETAIL_PENJUALAN**
 
-| Aspek | Aturan |
-| --- | --- |
-| Harga historis | `harga_satuan_resep` disimpan di `detail_resep` agar perubahan harga master obat tidak mengubah rekam medis sebelumnya. |
-| Batas item resep | Dengan `P = 4`, batas maksimum item resep obat per kunjungan adalah `P + 2 = 6` item. |
+`DETAIL_PENJUALAN (no_nota_penjualan, kode_barang, qty_detail_penjualan, harga_satuan_detail_penjualan, subtotal_detail_penjualan)`
+
+Kunci primer komposit: `(no_nota_penjualan, kode_barang)`.
+
+Pada tahap ini, ketergantungan pada sebagian kunci komposit telah dihilangkan. Akan tetapi, tabel `PENJUALAN` masih memiliki ketergantungan transitif karena `nama_petugas` ditentukan oleh `kode_petugas`, sedangkan `nama_anggota` ditentukan oleh `no_anggota`. Nilai turunan juga masih perlu dievaluasi sebelum menetapkan skema operasional akhir.
+
+### B. Tahap 3NF
+
+Bentuk normal ketiga (3NF) mensyaratkan bahwa relasi sudah memenuhi 2NF dan tidak memiliki ketergantungan transitif yang tidak diinginkan di antara atribut bukan kunci.
+
+Pada tabel penjualan terdapat rantai dependensi:
+
+`no_nota_penjualan → kode_petugas → nama_petugas`
+
+Selain itu, terdapat rantai:
+
+`no_nota_penjualan → no_anggota → nama_anggota`
+
+Kedua rantai tersebut menunjukkan bahwa nama petugas dan nama anggota tidak perlu disimpan berulang dalam tabel penjualan. Informasi tersebut dipisahkan ke tabel masing-masing.
+
+Relasi hasil normalisasi 3NF sesuai contoh dalam modul adalah:
+
+**1. PENJUALAN**
+
+`PENJUALAN (no_nota_penjualan, tgl_penjualan, kode_petugas*, no_anggota*, bayar_penjualan)`
+
+**2. DETAIL_PENJUALAN**
+
+`DETAIL_PENJUALAN (no_nota_penjualan*, kode_barang*, qty_detail_penjualan, harga_satuan_detail_penjualan)`
+
+**3. BARANG**
+
+`BARANG (kode_barang, nama_barang, kategori_barang, harga_jual_barang, stok_barang, stok_min_barang)`
+
+**4. PETUGAS**
+
+`PETUGAS (kode_petugas, nama_petugas, peran_petugas)`
+
+**5. ANGGOTA**
+
+`ANGGOTA (no_anggota, nim_anggota, nama_anggota, prodi_anggota, no_hp_anggota, status_anggota, tgl_daftar_anggota)`
+
+Keterangan:
+
+- Atribut yang ditetapkan sebagai kunci primer mengidentifikasi setiap baris dalam relasinya.
+- Tanda `*` menunjukkan kunci tamu atau referensi ke relasi lain.
+- `no_nota_penjualan` menjadi kunci primer pada bentuk relasi hasil pemisahan awal. Pada skema kanonik D.4, kunci primer penjualan menggunakan `id_penjualan`, sedangkan nomor nota menjadi kunci unik.
+
+### C. Keputusan Penyimpanan Nilai Turunan
+
+Nilai turunan yang dibahas dalam normalisasi penjualan meliputi:
+
+- `subtotal_detail_penjualan`
+- `jumlah_penjualan`
+- `diskon_penjualan`
+- `total_penjualan`
+
+Subtotal dihitung menggunakan rumus:
+
+`subtotal_detail_penjualan = qty_detail_penjualan × harga_satuan_detail_penjualan`
+
+Jumlah penjualan diperoleh dengan menjumlahkan subtotal seluruh barang dalam satu nota. Diskon ditentukan berdasarkan aturan bisnis yang berlaku, sedangkan total penjualan dihitung berdasarkan jumlah penjualan dan diskon.
+
+Berdasarkan keputusan dalam modul, `subtotal_detail_penjualan`, `jumlah_penjualan`, dan `total_penjualan` tidak disimpan sebagai atribut tersendiri dalam tabel operasional karena nilainya dapat dihitung dari detail transaksi dan aturan yang berlaku. Hal ini mengurangi risiko ketidaksesuaian antara nilai yang disimpan dan hasil perhitungan.
+
+Sementara itu, `bayar_penjualan` tetap dicatat karena merepresentasikan uang yang diterima dari pembeli. Nilai pembayaran aktual berbeda dari total belanja yang dihitung.
+
+## D.4 Mencocokkan dengan Skema Kanonik
+
+Skema kanonik Kopma menggunakan kunci pengganti (*surrogate key*) berupa atribut `id_*` sebagai kunci primer. Nomor atau kode alami tetap dipertahankan sebagai kunci unik apabila ditentukan dalam skema.
+
+### Tabel Skema Kanonik Kopma
+
+| Tabel | Kunci primer (PK) | Kunci unik (UQ) | Kunci tamu (FK) |
+|---|---|---|---|
+| `petugas` | `id_petugas` | `kode_petugas` | — |
+| `anggota` | `id_anggota` | `no_anggota`, `nim_anggota` | — |
+| `barang` | `id_barang` | `kode_barang` | — |
+| `pemasok` | `id_pemasok` | — | — |
+| `penjualan` | `id_penjualan` | `no_nota_penjualan` | `id_petugas`, `id_anggota` (boleh NULL) |
+| `detail_penjualan` | `(id_penjualan, id_barang)` | — | `id_penjualan`, `id_barang` |
+| `pembelian` | `id_pembelian` | — | `id_pemasok` |
+| `detail_pembelian` | `(id_pembelian, id_barang)` | — | `id_pembelian`, `id_barang` |
+
+Keterangan:
+
+- **PK (*Primary Key*)** adalah kunci primer untuk mengidentifikasi setiap baris.
+- **UQ (*Unique*)** memastikan nilai pada atribut yang ditetapkan unik tidak duplikat.
+- **FK (*Foreign Key*)** menghubungkan suatu tabel dengan tabel lain.
+- **NULL** menunjukkan bahwa suatu nilai boleh kosong sesuai aturan tabel.
+
+Penggunaan kunci pengganti membuat identitas internal tabel tidak bergantung langsung pada nomor atau kode alami. Kunci unik tetap diperlukan agar nomor nota, kode petugas, kode barang, dan identitas alami lainnya tidak digunakan secara ganda.
+
+### Pemeriksaan BCNF
+
+BCNF (*Boyce–Codd Normal Form*) mensyaratkan bahwa setiap penentu pada dependensi fungsional nontrivial merupakan kunci kandidat. Pemeriksaan berikut didasarkan pada kunci dalam skema kanonik dan dependensi fungsional yang telah diidentifikasi. Kesimpulan akhir tetap perlu disesuaikan jika terdapat aturan bisnis lain yang menghasilkan dependensi tambahan.
+
+| Tabel | Penentu yang diperiksa | Hasil pemeriksaan |
+|---|---|---|
+| `petugas` | `id_petugas`, `kode_petugas` | Kedua atribut merupakan kunci kandidat berdasarkan skema kanonik. Dependensi `kode_petugas → nama_petugas` tidak melanggar BCNF. |
+| `anggota` | `id_anggota`, `no_anggota`, `nim_anggota` | Atribut-atribut tersebut ditetapkan sebagai kunci kandidat berdasarkan skema kanonik. Dependensi yang penentunya merupakan salah satu kunci kandidat tidak melanggar BCNF. |
+| `barang` | `id_barang`, `kode_barang` | Kedua atribut merupakan kunci kandidat berdasarkan skema kanonik. Dependensi `kode_barang → nama_barang` tidak melanggar BCNF. |
+| `pemasok` | `id_pemasok` | `id_pemasok` merupakan kunci primer. BCNF terpenuhi apabila tidak ada penentu lain yang bukan kunci kandidat. |
+| `penjualan` | `id_penjualan`, `no_nota_penjualan` | Kedua atribut merupakan kunci kandidat berdasarkan skema kanonik. Dependensi yang diketahui tidak melanggar BCNF jika penentunya merupakan salah satu kunci kandidat tersebut. |
+| `detail_penjualan` | `(id_penjualan, id_barang)` | Gabungan atribut merupakan kunci primer komposit. BCNF terpenuhi jika tidak terdapat penentu lain yang bukan kunci kandidat. |
+| `pembelian` | `id_pembelian` | `id_pembelian` merupakan kunci primer. BCNF terpenuhi apabila tidak ada penentu lain yang bukan kunci kandidat. |
+| `detail_pembelian` | `(id_pembelian, id_barang)` | Gabungan atribut merupakan kunci primer komposit. BCNF terpenuhi jika tidak terdapat penentu lain yang bukan kunci kandidat. |
+
+Berdasarkan dependensi fungsional yang telah diidentifikasi, penentu yang merupakan kunci kandidat tidak melanggar BCNF. Pemeriksaan tetap harus mempertimbangkan seluruh dependensi yang berlaku pada setiap tabel. Penggunaan kunci pengganti saja tidak otomatis menjamin bahwa suatu relasi memenuhi BCNF.
+
+## Kesimpulan
+
+Normalisasi dilakukan untuk mengurangi pengulangan data, mencegah anomali ubah, sisip, dan hapus, serta menjaga konsistensi informasi. Tahap 1NF menghilangkan kelompok berulang, 2NF menghilangkan ketergantungan pada sebagian kunci komposit, dan 3NF menghilangkan ketergantungan transitif yang tidak diinginkan.
+
+Selanjutnya, relasi hasil normalisasi dicocokkan dengan skema kanonik Kopma yang menggunakan kunci pengganti dan kunci unik. Pemeriksaan BCNF dilakukan berdasarkan dependensi fungsional serta kunci kandidat pada setiap tabel. Keputusan untuk menghitung nilai turunan, bukan menyimpannya dalam tabel operasional, juga membantu menjaga konsistensi hasil perhitungan transaksi.
+
+## E. Latihan dan Modifikasi
+
+### 1. Normalisasi Nomor Telepon Pemasok
+
+Kopma membutuhkan penyimpanan beberapa nomor telepon untuk setiap pemasok. Jika beberapa nomor telepon disimpan dalam satu kolom pada tabel `pemasok`, data menjadi tidak atomik dan tidak memenuhi bentuk normal pertama (1NF).
+
+Untuk mengatasinya, data nomor telepon dipisahkan ke dalam relasi baru bernama `telepon_pemasok`.
+
+**Relasi pemasok:**
+
+`PEMASOK (id_pemasok, kode_pemasok, nama_pemasok, alamat_pemasok)`
+
+- PK: `id_pemasok`
+- UQ: `kode_pemasok`
+
+**Relasi telepon pemasok:**
+
+`TELEPON_PEMASOK (id_pemasok, no_telepon)`
+
+- PK: `(id_pemasok, no_telepon)`
+- FK: `id_pemasok` mengacu pada `PEMASOK(id_pemasok)`
+
+Dengan pemisahan ini, satu pemasok dapat memiliki beberapa nomor telepon. Setiap nomor telepon disimpan sebagai satu nilai dalam satu baris, sedangkan data pemasok tidak perlu diulang untuk setiap nomor telepon.
+
+### 2. Pelanggaran 3NF dan Anomali Ubah
+
+Jika atribut `nama_anggota` disimpan di tabel `penjualan`, maka nama anggota akan berulang pada setiap transaksi yang dilakukan oleh anggota yang sama.
+
+Contoh data:
+
+| no_nota_penjualan | no_anggota | nama_anggota |
+|---|---|---|
+| N001 | A-0001 | Andi |
+| N002 | A-0001 | Andi |
+
+Pada data tersebut, `no_nota_penjualan` menentukan `no_anggota`, sedangkan `no_anggota` menentukan `nama_anggota`. Dengan demikian, terdapat dependensi transitif:
+
+`no_nota_penjualan → no_anggota → nama_anggota`
+
+Hal ini melanggar 3NF karena atribut `nama_anggota` bergantung secara transitif pada kunci primer `no_nota_penjualan`, bukan secara langsung pada kunci primer tersebut.
+
+**Contoh kueri yang menunjukkan anomali ubah:**
+
+```sql
+UPDATE penjualan
+SET nama_anggota = 'Andi Pratama'
+WHERE no_nota_penjualan = 'N001';
